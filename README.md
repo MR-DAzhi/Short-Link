@@ -36,3 +36,23 @@ DWZ/
 │   └── styles.css          # 自定义精美 UI 样式
 ├── worker.js               # 核心边缘路由与鉴权逻辑核心
 └── wrangler.toml           # Cloudflare 配置文件
+
+🚀 快速部署指南
+1. 环境准备
+确保本地已安装 Node.js 环境，并在项目根目录下初始化依赖（如果需要）。
+
+2. 配置文件修改
+打开 wrangler.toml，配置你的 Worker 名称以及绑定你的 KV 数据库空间：
+name = "your-short-link-name"
+main = "worker.js"
+compatibility_date = "2026-07-04"
+
+[vars]
+ADMIN_TOKEN = "你的超级管理员密码"
+
+[[kv_namespaces]]
+binding = "DB"
+id = "你的Cloudflare_KV_ID"
+3. 本地调试与发布
+在终端（CMD / Git Bash）中执行以下指令：
+本地预览测试：
