@@ -3,7 +3,14 @@
 Short-Link 是一款基于全球边缘网络（Cloudflare Workers）构建的高性能、零延迟短网址转发控制台。项目采用前后端分离设计，具备纯净安全的分流控能力，支持一键部署，实现零成本、零服务器开销的私有化短网址管理。
 
 ---
+## 🖥️ 界面预览
 
+<p align="center">
+  <img src="1.jpg" alt="门户主页" width="48%" style="max-width: 100%; display: inline-block; vertical-align: middle;" />
+</p>
+<p align="center">  
+  <img src="2.jpg" alt="管理控制台" width="48%" style="max-width: 100%; display: inline-block; vertical-align: middle;" />
+</p>
 ## ✨ 核心特性
 
 * 🚀 **全球加速**：基于 Cloudflare Workers 边缘网络，全球请求零延迟智能转发。
