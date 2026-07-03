@@ -1,0 +1,38 @@
+# ⚡ Short-Link | 高性能轻量级短网址重定向引擎
+
+Short-Link 是一款基于全球边缘网络（Cloudflare Workers）构建的高性能、零延迟短网址转发控制台。项目采用前后端分离设计，具备纯净安全的分流控能力，支持一键部署，实现零成本、零服务器开销的私有化短网址管理。
+
+---
+
+## ✨ 核心特性
+
+* 🚀 **全球加速**：基于 Cloudflare Workers 边缘网络，全球请求零延迟智能转发。
+* 🔒 **私密安全**：管理后台全面接入强鉴权保护与安全 Cookie 机制，根路径与非授权访问严格拦截，拒绝越权漏洞。
+* 🎨 **极简美学**：前端基于 Pico CSS 框架深度定制，完美适配暗黑模式（Dark Mode），输入框高精对齐，极致流畅。
+* 📉 **零开销运行**：完全依托 Cloudflare 免费版 KV 数据库，真正做到“纯本地开销、零服务器支出”。
+* 🔄 **智能路由**：自动兼容末尾斜杠（`/admin` 与 `/admin/`）的习惯性输入，防止路由滑落导致 404。
+
+---
+
+## 🛠️ 技术栈
+
+* **Runtime**: Cloudflare Workers (JavaScript / ES Modules)
+* **Database**: Cloudflare KV (Key-Value 存储)
+* **Frontend**: Vanilla JS + Pico CSS (HTML5 / CSS3)
+* **Deployment**: Wrangler CLI
+
+---
+
+## 📦 项目结构
+
+```text
+DWZ/
+├── frontend/
+│   ├── 404.html            # 404 错误兜底页
+│   ├── admin_login.html    # 管理员登录页
+│   ├── admin.html          # 管理控制台主页（短链生成与管理）
+│   ├── index.html          # 访客门户主页
+│   ├── pico.min.css        # 基础样式框架
+│   └── styles.css          # 自定义精美 UI 样式
+├── worker.js               # 核心边缘路由与鉴权逻辑核心
+└── wrangler.toml           # Cloudflare 配置文件
