@@ -1,0 +1,13 @@
+name = "dwz"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# 🌐 域名留着，防止线上自定义域名被覆盖冲掉
+[[routes]]
+pattern = "d.alipan.qzz.io"
+custom_domain = true
+
+# 📦 KV 命名空间
+[[kv_namespaces]]
+binding = "DB"
+id = "c67226bbce2d47bc84ecd754e3138aa1"

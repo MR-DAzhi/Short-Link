@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>短网址管理后台</title>
+<link rel="stylesheet" href="/pico.min.css">
+<link rel="stylesheet" href="/styles.css">
+<style>
+body { 
+background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%) !important; 
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 2rem 1rem;
+}
+.container { 
+width: 100%; 
+max-width: 850px; 
+margin: 0 auto;
+}
+.glass-card {
+background: rgba(30, 41, 59, 0.4) !important;
+backdrop-filter: blur(16px) !important;
+-webkit-backdrop-filter: blur(16px) !important;
+border: 1px solid rgba(255, 255, 255, 0.12) !important;
+border-radius: 20px !important;
+padding: 2rem !important;
+margin-bottom: 2rem !important;
+box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.5), 0 8px 16px -6px rgba(0, 0, 0, 0.4) !important;
+}
+.brand-header { 
+display: flex; 
+justify-content: space-between; 
+align-items: center; 
+margin-bottom: 1.5rem; 
+border-bottom: none !important;
+padding-bottom: 0 !important;
+margin-top: 0 !important;
+}
+.brand-title {
+display: flex;
+align-items: center;
+gap: 10px;
+font-size: 1.6rem;
+font-weight: 700;
+color: #ffffff;
+}
+.form-group {
+display: flex;
+flex-direction: column;
+gap: 14px;
+margin-bottom: 1.5rem;
+}
+.input-wrapper {
+display: flex;
+align-items: center;
+background: rgba(15, 23, 42, 0.6) !important;
+border: 1px solid rgba(255, 255, 255, 0.15) !important;
+border-radius: 12px !important;
+padding: 0 16px !important;
+transition: all 0.25s ease !important;
+}
+.input-wrapper:focus-within {
+border-color: #3b82f6 !important;
+box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3) !important;
+background: rgba(15, 23, 42, 0.8) !important;
+}
+.input-label {
+color: #94a3b8;
+font-size: 0.95rem;
+font-weight: 500;
+white-space: nowrap;
+width: 70px;
+text-align-last: justify;
+margin-right: 16px;
+flex-shrink: 0;
+}
+.form-group input {
+background: transparent !important;
+border: none !important;
+color: #fff !important;
+padding: 14px 0 14px 12px !important;
+font-size: 15px !important;
+margin-bottom: 0 !important;
+width: 100%;
+}
+.form-group input:focus {
+box-shadow: none !important;
+}
+.btn-submit {
+background: linear-gradient(135deg, #a7f3d0 0%, #34d399 100%) !important;
+color: #064e3b !important;
+border: none !important;
+font-weight: 700 !important;
+border-radius: 12px !important;
+padding: 14px !important;
+width: auto !important;
+min-width: 160px;
+margin: 0 auto !important;
+display: flex !important;
+justify-content: center;
+align-items: center;
+gap: 6px;
+box-shadow: 0 8px 20px rgba(52, 211, 153, 0.2) !important;
+}
+.btn-submit:hover {
+transform: translateY(-1px) !important;
+box-shadow: 0 12px 24px rgba(52, 211, 153, 0.3) !important;
+opacity: 0.95;
+}
+.btn-logout {
+background: rgba(255, 255, 255, 0.08) !important;
+border: 1px solid rgba(255, 255, 255, 0.15) !important;
+color: #cbd5e1 !important;
+border-radius: 10px !important;
+padding: 8px 16px !important;
+font-size: 0.9rem;
+font-weight: 600;
+display: flex;
+align-items: center;
+gap: 6px;
+box-shadow: none !important;
+}
+.btn-logout:hover {
+background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%) !important;
+border-color: transparent !important;
+color: #ffffff !important;
+}
+th {
+font-size: 0.95rem;
+letter-spacing: 0.5px;
+}
+td {
+font-size: 0.95rem;
+}
+.short-path {
+color: #60a5fa !important;
+font-weight: 600;
+text-decoration: none;
+}
+.short-path:hover {
+text-decoration: underline;
+}
+.target-url {
+max-width: 280px;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+color: #94a3b8;
+}
+.action-btns {
+display: flex;
+gap: 10px;
+}
+.btn-action {
+padding: 6px 14px !important;
+font-size: 0.85rem !important;
+border-radius: 8px !important;
+font-weight: 600 !important;
+white-space: nowrap;
+}
+.btn-copy {
+background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%) !important;
+box-shadow: 0 4px 10px rgba(59, 130, 246, 0.2) !important;
+}
+.btn-delete {
+background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%) !important;
+box-shadow: 0 4px 10px rgba(239, 68, 68, 0.2) !important;
+}
+@media (max-width: 768px) {
+.target-url { max-width: 140px; }
+.brand-header { flex-direction: row !important; align-items: center !important; }
+}
+</style>
+</head>
+<body>
+<main class="container">
+<div class="glass-card">
+<div class="brand-header">
+<div class="brand-title">
+<span>🔗</span> 管理中心
+</div>
+<button class="btn-logout" onclick="logout()">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+退出登录
+</button>
+</div>
+<form id="createForm" onsubmit="createShortlink(event)">
+<div class="form-group">
+<div class="input-wrapper">
+<span class="input-label">后缀</span>
+<input type="text" id="shortName" placeholder="（字母/数字/连字符）" pattern="[a-zA-Z0-9-_]{1,20}" required>
+</div>
+<div class="input-wrapper">
+<span class="input-label">目标网址</span>
+<input type="url" id="targetUrl" placeholder="https://..." required>
+</div>
+</div>
+<button type="submit" class="btn-submit">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+立即生成
+</button>
+</form>
+</div>
+<div class="glass-card" style="padding: 1.2rem !important;">
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>路径</th>
+<th>目标网址</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody id="listBody">
+</tbody>
+</table>
+</div>
+</div>
+</main>
+<script>
+const BASE = window.location.origin;
+async function loadLinks() {
+try {
+const res = await fetch(BASE + '/api/shortlink');
+if (res.status === 401) {
+window.location.href = BASE + '/admin/login';
+return;
+}
+const data = await res.json();
+const listBody = document.getElementById('listBody');
+if (Object.keys(data).length === 0) {
+listBody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#64748b;">暂无短网址数据</td></tr>`;
+return;
+}
+listBody.innerHTML = Object.keys(data).map(key => {
+const target = data[key];
+const fullShortUrl = `${BASE}/${key}`;
+return `
+<tr>
+<td><a href="${fullShortUrl}" target="_blank" class="short-path">/${key}</a></td>
+<td><div class="target-url" title="${target}">${target}</div></td>
+<td>
+<div class="action-btns">
+<button class="btn-action btn-copy" onclick="copyToClipboard('${fullShortUrl}')">复制</button>
+<button class="btn-action btn-delete" onclick="deleteLink('${key}')">删除</button>
+</div>
+</td>
+</tr>
+`;
+}).join('');
+} catch (err) {
+document.getElementById('listBody').innerHTML = `<tr><td colspan="3" style="text-align:center; color:#ef4444;">数据加载失败，请刷新页面</td></tr>`;
+}
+}
+function copyToClipboard(text) {
+navigator.clipboard.writeText(text).then(() => {
+alert('短网址已成功复制到剪贴板！');
+}).catch(() => {
+const el = document.createElement('textarea');
+el.value = text;
+document.body.appendChild(el);
+el.select();
+document.execCommand('copy');
+document.body.removeChild(el);
+alert('短网址已成功复制到剪贴板！');
+});
+}
+async function createShortlink(e) {
+e.preventDefault();
+const name = document.getElementById('shortName').value.trim();
+const target = document.getElementById('targetUrl').value.trim();
+const res = await fetch(BASE + '/api/shortlink', {
+method: 'POST',
+headers: {'Content-Type': 'application/json'},
+body: JSON.stringify({ name, target })
+});
+if (res.status === 401) {
+window.location.href = BASE + '/admin/login';
+return;
+}
+if (res.ok) { 
+loadLinks(); 
+document.getElementById('createForm').reset(); 
+} else { 
+alert('创建失败，请检查后缀是否重复或输入格式是否有误'); 
+}
+}
+async function deleteLink(name) {
+if(!confirm(`确定要删除 /${name} 这个短网址吗？`)) return;
+const res = await fetch(BASE + '/api/shortlink', {
+method: 'DELETE',
+headers: {'Content-Type': 'application/json'},
+body: JSON.stringify({ name })
+});
+if (res.status === 401) {
+window.location.href = BASE + '/admin/login';
+return;
+}
+loadLinks();
+}
+async function logout() {
+await fetch(BASE + '/api/logout');
+window.location.href = BASE + '/admin/login';
+}
+loadLinks();
+</script>
+</body>
+</html>

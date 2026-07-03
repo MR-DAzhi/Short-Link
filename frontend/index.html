@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>短网址重定向引擎</title>
+<link rel="stylesheet" href="/pico.min.css">
+<link rel="stylesheet" href="/styles.css">
+<style>
+body {
+background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%) !important;
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 2rem 1rem;
+margin: 0;
+}
+.container {
+width: 100%;
+max-width: 550px;
+margin: 0 auto;
+}
+.glass-card {
+background: rgba(30, 41, 59, 0.4) !important;
+backdrop-filter: blur(16px) !important;
+-webkit-backdrop-filter: blur(16px) !important;
+border: 1px solid rgba(255, 255, 255, 0.12) !important;
+border-radius: 20px !important;
+padding: 3rem 2rem !important;
+text-align: center;
+box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.5), 0 8px 16px -6px rgba(0, 0, 0, 0.4) !important;
+}
+.icon-flash {
+font-size: 3.5rem;
+color: #a78bfa;
+margin-bottom: 1.5rem;
+animation: pulse 2s infinite;
+display: inline-block;
+}
+@keyframes pulse {
+0% { transform: scale(1); opacity: 0.9; }
+50% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 15px rgba(167, 139, 250, 0.6)); }
+100% { transform: scale(1); opacity: 0.9; }
+}
+h1 {
+font-size: 2rem;
+font-weight: 800;
+color: #ffffff;
+margin-bottom: 1rem;
+letter-spacing: 0.5px;
+}
+p {
+color: #94a3b8;
+font-size: 1rem;
+line-height: 1.6;
+margin-bottom: 2.5rem;
+max-width: 420px;
+margin-left: auto;
+margin-right: auto;
+}
+.features-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 12px;
+margin-bottom: 2.5rem;
+border-top: 1px solid rgba(255, 255, 255, 0.08);
+padding-top: 2rem;
+}
+.feature-item {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 6px;
+}
+.feature-icon {
+font-size: 1.2rem;
+}
+.feature-text {
+color: #64748b;
+font-size: 0.8rem;
+font-weight: 500;
+}
+.btn-enter {
+background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+color: #ffffff !important;
+border: none !important;
+font-weight: 700 !important;
+border-radius: 12px !important;
+padding: 14px 28px !important;
+width: auto !important;
+min-width: 200px;
+margin: 0 auto !important;
+display: inline-flex !important;
+justify-content: center;
+align-items: center;
+gap: 8px;
+font-size: 1rem;
+box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3) !important;
+text-decoration: none !important;
+transition: all 0.25s ease !important;
+}
+.btn-enter:hover {
+transform: translateY(-2px) !important;
+box-shadow: 0 12px 28px rgba(99, 102, 241, 0.45) !important;
+opacity: 0.95;
+}
+</style>
+</head>
+<body>
+<main class="container">
+<div class="glass-card">
+<div class="icon-flash">⚡</div>
+<h1>短网址重定向引擎</h1>
+<p>基于全球边缘网络构建的高性能、零延迟链接转发控制台，提供纯净安全的分流控能力。</p>
+<div class="features-grid">
+<div class="feature-item">
+<span class="feature-icon">🚀</span>
+<span class="feature-text">全球加速</span>
+</div>
+<div class="feature-item">
+<span class="feature-icon">🔒</span>
+<span class="feature-text">私密安全</span>
+</div>
+<div class="feature-item">
+<span class="feature-icon">📉</span>
+<span class="feature-text">零延迟转发</span>
+</div>
+</div>
+<a href="/admin" class="btn-enter">
+进入管理控制台
+</a>
+</div>
+</main>
+</body>
+</html>

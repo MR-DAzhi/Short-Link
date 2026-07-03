@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统安全验证</title>
+    <link rel="stylesheet" href="/pico.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --background-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: var(--background-gradient);
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        .login-container {
+            background: rgba(30, 41, 59, 0.7);
+            padding: 2.5rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #f8fafc;
+            letter-spacing: 1px;
+        }
+        input[type="password"] {
+            background: rgba(15, 23, 42, 0.6) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            color: #fff !important;
+            border-radius: 8px !important;
+            padding: 0.75rem !important;
+            margin-bottom: 1rem !important;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        input[type="password"]:focus {
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.4) !important;
+        }
+        button {
+            background: var(--primary) !important;
+            border: none !important;
+            color: white !important;
+            padding: 0.75rem !important;
+            border-radius: 8px !important;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.2s;
+        }
+        button:hover {
+            background: #4338ca !important;
+            transform: translateY(-1px);
+        }
+        .error-msg {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.8rem;
+            min-height: 1.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>系统安全验证</h2>
+        <form id="loginForm">
+            <input type="password" id="password" placeholder="请输入管理员密钥" required autocomplete="current-password">
+            <button type="submit" id="submitBtn">解锁后台</button>
+            <div class="error-msg" id="errorMsg"></div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault(); // 🛡️ 极其关键：阻止表单默认提交，防止页面刷新闪烁
+            
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('errorMsg');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            errorMsg.textContent = '';
+            submitBtn.disabled = true;
+            submitBtn.textContent = '正在验证...';
+            
+            try {
+                // 🚀 严格遵循 worker.js 后端逻辑：使用 GET 请求访问 /api/login，并通过头部传递密码
+                const response = await fetch('/api/login', {
+                    method: 'GET',
+                    headers: {
+                        'x-api-key': password
+                    }
+                });
+                
+                if (response.ok) {
+                    // 验证成功，此时后端已成功下发 Cookie，直接跳转管理后台
+                    window.location.href = '/admin';
+                } else {
+                    errorMsg.textContent = '密码错误，请重新输入';
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '解锁后台';
+                }
+            } catch (err) {
+                errorMsg.textContent = '网络错误，请稍后再试';
+                submitBtn.disabled = false;
+                submitBtn.textContent = '解锁后台';
+            }
+        });
+    </script>
+</body>
+</html>
